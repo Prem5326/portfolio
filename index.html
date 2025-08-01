@@ -1,61 +1,615 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Prem Chandhan Portfolio</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BUKKE PREM CHANDHAN KUMAR NAIK - Portfolio</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a202c; /* Darker blue-gray background */
+            color: #e2e8f0; /* Lighter text */
+            line-height: 1.6;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #2d3748; /* Darker track */
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #4a5568; /* Slightly lighter thumb */
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #718096; /* Even lighter on hover */
+        }
+
+        /* Hero Section Animations */
+        .hero-text {
+            animation: slideInLeft 1s ease-out forwards;
+            opacity: 0;
+        }
+
+        .hero-subtitle {
+            animation: slideInLeft 1.2s ease-out forwards;
+            opacity: 0;
+            animation-delay: 0.2s;
+        }
+
+        .hero-buttons {
+            animation: fadeIn 1.5s ease-out forwards;
+            opacity: 0;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Card Hover Effect */
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background-color: #2d3748; /* Card background */
+            border: 1px solid #4a5568; /* Card border */
+            border-radius: 0.75rem; /* More rounded corners */
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Button Hover Effect */
+        .btn {
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Section Title Animation */
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: #63b3ed; /* Accent color */
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 0;
+            height: 3px;
+            background-color: #63b3ed; /* Accent color */
+            transition: width 0.4s ease-out;
+        }
+
+        .section-title:hover::after {
+            width: 100%;
+        }
+
+        /* Project Image Hover */
+        .project-image {
+            transition: transform 0.3s ease;
+        }
+
+        .project-image:hover {
+            transform: scale(1.03);
+        }
+
+        /* Skill Item Styling */
+        .skill-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            background-color: #4a5568; /* Skill item background */
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .skill-item:hover {
+            transform: translateY(-3px);
+            background-color: #63b3ed; /* Accent color on hover */
+            color: #1a202c; /* Dark text on hover */
+        }
+
+        .skill-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 0.5rem;
+            fill: currentColor; /* Inherit color from parent */
+        }
+
+        /* Fade-in on scroll */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Social Icons */
+        .social-icon {
+            transition: transform 0.2s ease, color 0.3s ease;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-3px);
+            color: #63b3ed; /* Accent color on hover */
+        }
+
+        /* Profile Image Specific Styling */
+        .profile-image-container {
+            width: 256px; /* w-64 */
+            height: 256px; /* h-64 */
+            overflow: hidden;
+            border-radius: 9999px; /* rounded-full */
+            border: 4px solid #63b3ed; /* border-blue-400 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures the image covers the area */
+            object-position: top center; /* Adjusts the image to show from the top (chest area) */
+        }
+
+        @media (min-width: 768px) { /* md: breakpoint */
+            .profile-image-container {
+                width: 320px; /* md:w-80 */
+                height: 320px; /* md:h-80 */
+            }
+        }
+    </style>
 </head>
-<body>
-  <section class="hero">
-    <h1>Hi, I'm Prem Chandhan Kumar Naik</h1>
-    <p>B.Tech CSE (AI & ML) @ VIT Amaravathi</p>
-    <a href="#about">Explore My Work ↓</a>
-  </section>
+<body class="antialiased">
 
-  <section id="about">
-    <h2>About Me</h2>
-    <p>Motivated AI/ML student skilled in web dev, cloud AI, and real-time systems. Certified in Microsoft Azure AI, with experience from IIRS.</p>
-  </section>
+    <!-- Header/Navigation -->
+    <header class="bg-gray-900 text-white py-4 shadow-lg sticky top-0 z-50">
+        <nav class="container flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-blue-400">Prem Chandhan</a>
+            <ul class="flex space-x-6">
+                <li><a href="#about" class="hover:text-blue-400 transition duration-300">About</a></li>
+                <li><a href="#skills" class="hover:text-blue-400 transition duration-300">Skills</a></li>
+                <li><a href="#experience" class="hover:text-blue-400 transition duration-300">Experience</a></li>
+                <li><a href="#projects" class="hover:text-blue-400 transition duration-300">Projects</a></li>
+                <li><a href="#education" class="hover:text-blue-400 transition duration-300">Education</a></li>
+                <li><a href="#certifications" class="hover:text-blue-400 transition duration-300">Certifications</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <section id="skills">
-    <h2>Skills</h2>
-    <ul>
-      <li>HTML, CSS, JavaScript</li>
-      <li>Python, Java, SQL, DSA</li>
-      <li>Microsoft Azure AI, ML Concepts</li>
-    </ul>
-  </section>
+    <!-- Hero Section -->
+    <section id="hero" class="h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 to-blue-900 text-white">
+        <div class="text-center">
+            <h1 class="text-5xl md:text-6xl font-extrabold mb-4 hero-text">Hi, I'm <span class="text-blue-400">Prem Chandhan</span></h1>
+            <p class="text-xl md:text-2xl mb-8 hero-subtitle">A results-driven Software Development Engineer Intern.</p>
+            <div class="space-x-4 hero-buttons">
+                <a href="#projects" class="btn bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full shadow-lg">View My Work</a>
+                <a href="mailto:premchandhan@gmail.com" class="btn bg-gray-700 hover:bg-gray-600 text-white px-8 py-3 rounded-full shadow-lg">Get in Touch</a>
+            </div>
+        </div>
+    </section>
 
-  <section id="projects">
-    <h2>Projects</h2>
-    <div>
-      <h3>Thermo-Susceptible Vigilant System</h3>
-      <p>Monitored medicine transport with real-time temperature alerts.</p>
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-gray-900 fade-in-section">
+        <div class="container">
+            <h2 class="text-4xl font-bold text-center mb-12 section-title">About Me</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <p class="text-lg leading-relaxed mb-4">
+                        A results-driven Software Development Engineer Intern at Bluestock Fintech with a strong 8.36 CGPA and
+                        global certifications in Oracle Generative AI and Microsoft Azure AI.
+                    </p>
+                    <p class="text-lg leading-relaxed mb-4">
+                        Possesses a versatile skill set demonstrated through project-based internships in Full-Stack Development, AI, and Machine Learning.
+                        Combines a solid academic foundation in software engineering with practical experience in building and deploying real-world applications.
+                    </p>
+                    <p class="text-lg leading-relaxed">
+                        Eager to contribute to a dynamic team and tackle complex software engineering challenges.
+                    </p>
+                    <div class="mt-8 flex space-x-6 justify-center md:justify-start">
+                        <a href="https://www.linkedin.com/in/premchandhan/" target="_blank" class="social-icon text-gray-400 hover:text-blue-400 text-3xl transition duration-300">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                        </a>
+                        <a href="https://github.com/premchandhan" target="_blank" class="social-icon text-gray-400 hover:text-blue-400 text-3xl transition duration-300">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 0C5.373 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.6.11.82-.26.82-.577v-2.234c-3.338.725-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.757-1.333-1.757-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.238 1.838 1.238 1.07 1.835 2.809 1.305 3.49.998.108-.775.418-1.305.762-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.382 1.235-3.22-.12-.3-.535-1.52.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.4 3.003-.404 1.02.004 2.046.138 3.003.404 2.293-1.552 3.3-1.23 3.3-1.23.653 1.656.238 2.876.118 3.176.77.838 1.233 1.91 1.233 3.22 0 4.61-2.805 5.62-5.475 5.92.43.37.823 1.102.823 2.222v3.293c0 .319.219.69.829.576C20.562 21.8 24 17.302 24 12c0-6.627-5.373-12-12-12z" clip-rule="evenodd"/></svg>
+                        </a>
+                        <a href="https://leetcode.com/premchandhan/" target="_blank" class="social-icon text-gray-400 hover:text-blue-400 text-3xl transition duration-300">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.79 10.707L18 6.5l-4.21-4.207a1 1 0 00-1.414 1.414L15.172 6H5a1 1 0 000 2h10.172l-2.793 2.793a1 1 0 001.414 1.414zM10.21 13.293L6 17.5l4.21 4.207a1 1 0 001.414-1.414L8.828 18H19a1 1 0 000-2h-10.172l2.793-2.793a1 1 0 00-1.414-1.414z"/></svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="flex justify-center">
+                    <div class="profile-image-container">
+                        <img src="img1.jpg">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-      <h3>AI/ML for Geodata Analysis</h3>
-      <p>Specialized in ML on geospatial data at IIRS.</p>
-    </div>
-  </section>
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-gray-800 fade-in-section">
+        <div class="container">
+            <h2 class="text-4xl font-bold text-center mb-12 section-title">Skills</h2>
+            <div class="space-y-12">
+                <!-- Languages -->
+                <div>
+                    <h3 class="text-3xl font-semibold mb-6 text-center text-blue-300">Languages</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
+                        <div class="skill-item card">
+                            <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8z"/><path d="M12 6.5v8M9 9l3-3 3 3"/></svg>
+                            <span class="text-lg font-medium">Python</span>
+                        </div>
+                        <div class="skill-item card">
+                            <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a4 4 0 01-4 4H8a4 4 0 01-4-4V4a4 4 0 014-4h4a4 4 0 014 4v4z"/><path d="M12 12v8M8 16h8"/></svg>
+                            <span class="text-lg font-medium">Java</span>
+                        </div>
+                        <div class="skill-item card">
+                            <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                            <span class="text-lg font-medium">JavaScript</span>
+                        </div>
+                        <div class="skill-item card">
+                            <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h20M12 2v20"/></svg>
+                            <span class="text-lg font-medium">HTML/CSS</span>
+                        </div>
+                        <div class="skill-item card">
+                            <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                            <span class="text-lg font-medium">SQL</span>
+                        </div>
+                    </div>
+                </div>
 
-  <section id="certifications">
-    <h2>Certifications</h2>
-    <ul>
-      <li>Microsoft Azure AI Fundamentals (AI-900)</li>
-      <li>AI/ML for Geospatial Analysis – IIRS</li>
-    </ul>
-  </section>
+                <!-- Technical Skills -->
+                <div>
+                    <h3 class="text-3xl font-semibold mb-6 text-center text-blue-300">Technical Skills</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
+                        <div class="skill-item card">
+                            <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 20v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 20v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                            <span class="text-lg font-medium">DSA</span>
+                        </div>
+                        <div class="skill-item card">
+                            <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                            <span class="text-lg font-medium">AI & ML</span>
+                        </div>
+                        <div class="skill-item card">
+                            <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect><polyline points="17 2 12 7 7 2"></polyline></svg>
+                            <span class="text-lg font-medium">Full-Stack Dev</span>
+                        </div>
+                        <div class="skill-item card">
+                            <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                            <span class="text-lg font-medium">Software Eng</span>
+                        </div>
+                        <div class="skill-item card">
+                            <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26a8 8 0 100 4H18a2 2 0 002-2v-4a2 2 0 00-2-2z"/></svg>
+                            <span class="text-lg font-medium">Cloud (Azure, OCI)</span>
+                        </div>
+                    </div>
+                </div>
 
-  <section id="contact">
-    <h2>Contact</h2>
-    <p>Email: <a href="mailto:premchandhan@gmail.com">premchandhan@gmail.com</a></p>
-    <p>LinkedIn: <a href="https://www.linkedin.com/in/bukke-prem-chandhan-kumar-naik-b0a016275" target="_blank">Click to Connect</a></p>
-  </section>
+                <!-- Developer Tools -->
+                <div>
+                    <h3 class="text-3xl font-semibold mb-6 text-center text-blue-300">Developer Tools</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
+                        <div class="skill-item card">
+                            <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.66V20a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2h5.34M18 2L22 6l-4 4M22 6H12"/></svg>
+                            <span class="text-lg font-medium">Git</span>
+                        </div>
+                        <div class="skill-item card">
+                            <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 3c0-.97-.34-2.22-1.09-3.41M12 17.27v3.13M12 12.44v.01"/></svg>
+                            <span class="text-lg font-medium">GitHub</span>
+                        </div>
+                        <div class="skill-item card">
+                            <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+                            <span class="text-lg font-medium">VS Code</span>
+                        </div>
+                        <div class="skill-item card">
+                            <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M12 12h.01"/></svg>
+                            <span class="text-lg font-medium">Jupyter Notebook</span>
+                        </div>
+                        <div class="skill-item card">
+                            <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                            <span class="text-lg font-medium">Docker</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <footer>
-    <p>© 2025 Prem Chandhan. All rights reserved.</p>
-  </footer>
+    <!-- Experience Section -->
+    <section id="experience" class="py-20 bg-gray-900 fade-in-section">
+        <div class="container">
+            <h2 class="text-4xl font-bold text-center mb-12 section-title">Experience</h2>
+            <div class="space-y-10">
+                <!-- Bluestock Fintech -->
+                <div class="card p-8 rounded-lg shadow-md flex flex-col md:flex-row items-start md:items-center">
+                    <div class="md:w-1/4 mb-4 md:mb-0">
+                        <h3 class="text-xl font-semibold text-blue-300">Software Development Engineer Intern</h3>
+                        <p class="text-gray-400">Bluestock Fintech</p>
+                        <p class="text-sm text-gray-500">July 2025 - Present</p>
+                    </div>
+                    <div class="md:w-3/4 md:pl-8">
+                        <ul class="list-disc list-inside text-lg space-y-2">
+                            <li>Contributed to the development and maintenance of core fintech applications.</li>
+                            <!-- Add more details if available -->
+                        </ul>
+                    </div>
+                </div>
 
-  <script src="script.js"></script>
+                <!-- YBI Foundation -->
+                <div class="card p-8 rounded-lg shadow-md flex flex-col md:flex-row items-start md:items-center">
+                    <div class="md:w-1/4 mb-4 md:mb-0">
+                        <h3 class="text-xl font-semibold text-blue-300">Artificial Intelligence Intern</h3>
+                        <p class="text-gray-400">YBI Foundation</p>
+                        <p class="text-sm text-gray-500">May 2025 - June 2025</p>
+                    </div>
+                    <div class="md:w-3/4 md:pl-8">
+                        <ul class="list-disc list-inside text-lg space-y-2">
+                            <li>Worked on an AI-based project, focusing on data processing and model implementation.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Info Bharat Interns -->
+                <div class="card p-8 rounded-lg shadow-md flex flex-col md:flex-row items-start md:items-center">
+                    <div class="md:w-1/4 mb-4 md:mb-0">
+                        <h3 class="text-xl font-semibold text-blue-300">Web Development Intern</h3>
+                        <p class="text-gray-400">Info Bharat Interns</p>
+                        <p class="text-sm text-gray-500">Jun 2025 - July 2025</p>
+                    </div>
+                    <div class="md:w-3/4 md:pl-8">
+                        <ul class="list-disc list-inside text-lg space-y-2">
+                            <li>Built responsive and dynamic web pages for various client projects.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Navodita Infotech -->
+                <div class="card p-8 rounded-lg shadow-md flex flex-col md:flex-row items-start md:items-center">
+                    <div class="md:w-1/4 mb-4 md:mb-0">
+                        <h3 class="text-xl font-semibold text-blue-300">Machine Learning Intern</h3>
+                        <p class="text-gray-400">Navodita Infotech</p>
+                        <p class="text-sm text-gray-500">May 2025 - June 2025</p>
+                    </div>
+                    <div class="md:w-3/4 md:pl-8">
+                        <ul class="list-disc list-inside text-lg space-y-2">
+                            <li>Completed a project-based internship focused on developing and training ML models.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-gray-800 fade-in-section">
+        <div class="container">
+            <h2 class="text-4xl font-bold text-center mb-12 section-title">Projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- E-commerce Website -->
+                <div class="card p-6 rounded-lg shadow-md">
+                    <img src="https://placehold.co/600x400/2d3748/e2e8f0?text=E-commerce+Website" alt="E-commerce Website" class="rounded-md mb-4 project-image">
+                    <h3 class="text-2xl font-semibold mb-2 text-blue-300">E-commerce Website</h3>
+                    <p class="text-gray-400 text-sm mb-3">Currently Working On</p>
+                    <p class="text-lg mb-4">A full-featured e-commerce platform using the MERN stack with user authentication and product management.</p>
+                    <a href="https://github.com/premchandhan/e-commerce-website" target="_blank" class="text-blue-400 hover:underline">View on GitHub &rarr;</a>
+                </div>
+
+                <!-- Text Generation using Transfer Learning -->
+                <div class="card p-6 rounded-lg shadow-md">
+                    <img src="https://placehold.co/600x400/2d3748/e2e8f0?text=Text+Generation" alt="Text Generation" class="rounded-md mb-4 project-image">
+                    <h3 class="text-2xl font-semibold mb-2 text-blue-300">Text Generation using Transfer Learning</h3>
+                    <p class="text-gray-400 text-sm mb-3">May 2025 - Jun 2025</p>
+                    <p class="text-lg mb-4">Developed a text generation model by fine-tuning a pre-trained transformer (like GPT-2) for a specific creative writing task.</p>
+                    <a href="https://github.com/premchandhan/text-generation" target="_blank" class="text-blue-400 hover:underline">View on GitHub &rarr;</a>
+                </div>
+
+                <!-- Crop Disease Detection (Deep Learning) -->
+                <div class="card p-6 rounded-lg shadow-md">
+                    <img src="https://placehold.co/600x400/2d3748/e2e8f0?text=Crop+Disease+Detection" alt="Crop Disease Detection" class="rounded-md mb-4 project-image">
+                    <h3 class="text-2xl font-semibold mb-2 text-blue-300">Crop Disease Detection (Deep Learning)</h3>
+                    <p class="text-gray-400 text-sm mb-3">Jan 2025 - May 2025</p>
+                    <p class="text-lg mb-4">Built and trained a Convolutional Neural Network (CNN) to classify plant diseases from leaf images, achieving high accuracy.</p>
+                    <a href="https://github.com/premchandhan/crop-disease-detection" target="_blank" class="text-blue-400 hover:underline">View on GitHub &rarr;</a>
+                </div>
+
+                <!-- Library Management System (Software Engineering) -->
+                <div class="card p-6 rounded-lg shadow-md">
+                    <img src="https://placehold.co/600x400/2d3748/e2e8f0?text=Library+Management" alt="Library Management System" class="rounded-md mb-4 project-image">
+                    <h3 class="text-2xl font-semibold mb-2 text-blue-300">Library Management System</h3>
+                    <p class="text-gray-400 text-sm mb-3">July 2024 - Dec 2024</p>
+                    <p class="text-lg mb-4">Designed and implemented a desktop application for managing library operations, including book issuance, returns, and member records.</p>
+                    <a href="https://github.com/premchandhan/library-management-system" target="_blank" class="text-blue-400 hover:underline">View on GitHub &rarr;</a>
+                </div>
+
+                <!-- Automated Waste Management System -->
+                <div class="card p-6 rounded-lg shadow-md">
+                    <img src="https://placehold.co/600x400/2d3748/e2e8f0?text=Waste+Management" alt="Automated Waste Management System" class="rounded-md mb-4 project-image">
+                    <h3 class="text-2xl font-semibold mb-2 text-blue-300">Automated Waste Management System</h3>
+                    <p class="text-gray-400 text-sm mb-3">Jan 2024 - May 2024</p>
+                    <p class="text-lg mb-4">Engineered an IoT-based smart bin that automatically segregates waste into dry/wet categories, detects hazardous materials, and sends notifications when full.</p>
+                    <!-- Removed GitHub link as requested -->
+                </div>
+
+                <!-- Thermo-Susceptible Vigilant System -->
+                <div class="card p-6 rounded-lg shadow-md">
+                    <img src="https://placehold.co/600x400/2d3748/e2e8f0?text=Thermo+Vigilant" alt="Thermo-Susceptible Vigilant System" class="rounded-md mb-4 project-image">
+                    <h3 class="text-2xl font-semibold mb-2 text-blue-300">Thermo-Susceptible Vigilant System</h3>
+                    <p class="text-gray-400 text-sm mb-3">Jan 2023 - Jun 2023</p>
+                    <p class="text-lg mb-4">Developed a system to monitor and maintain the temperature of medicines during transportation, implementing real-time alerts for deviations.</p>
+                    <!-- Removed GitHub link as requested -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="py-20 bg-gray-900 fade-in-section">
+        <div class="container">
+            <h2 class="text-4xl font-bold text-center mb-12 section-title">Education</h2>
+            <div class="space-y-8">
+                <!-- B.Tech -->
+                <div class="card p-8 rounded-lg shadow-md flex flex-col md:flex-row items-start md:items-center">
+                    <div class="md:w-1/4 mb-4 md:mb-0">
+                        <h3 class="text-xl font-semibold text-blue-300">B.Tech in Computer Science and Engineering (AI & Machine Learning)</h3>
+                        <p class="text-gray-400">Vellore Institute of Technology (VIT-AP), Amaravathi</p>
+                        <p class="text-sm text-gray-500">Expected 2026</p>
+                    </div>
+                    <div class="md:w-3/4 md:pl-8">
+                        <p class="text-lg">Current CGPA: 8.36/10.0</p>
+                    </div>
+                </div>
+
+                <!-- Intermediate -->
+                <div class="card p-8 rounded-lg shadow-md flex flex-col md:flex-row items-start md:items-center">
+                    <div class="md:w-1/4 mb-4 md:mb-0">
+                        <h3 class="text-xl font-semibold text-blue-300">Intermediate (BIEAP)</h3>
+                        <p class="text-gray-400">Ratnam Junior College, Nellore</p>
+                        <p class="text-sm text-gray-500">Graduated 2022</p>
+                    </div>
+                    <div class="md:w-3/4 md:pl-8">
+                        <p class="text-lg">Percentage: 92.8%</p>
+                    </div>
+                </div>
+
+                <!-- Class 10 -->
+                <div class="card p-8 rounded-lg shadow-md flex flex-col md:flex-row items-start md:items-center">
+                    <div class="md:w-1/4 mb-4 md:mb-0">
+                        <h3 class="text-xl font-semibold text-blue-300">Class 10 (SSC)</h3>
+                        <p class="text-gray-400">Sri Chaitanya Techno School, Proddatur</p>
+                        <p class="text-sm text-gray-500">Graduated 2020</p>
+                    </div>
+                    <div class="md:w-3/4 md:pl-8">
+                        <p class="text-lg">Percentage: 100%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section id="certifications" class="py-20 bg-gray-800 fade-in-section">
+        <div class="container">
+            <h2 class="text-4xl font-bold text-center mb-12 section-title">Professional Certifications</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Oracle Certified Professional: Generative AI -->
+                <div class="card p-6 rounded-lg shadow-md">
+                    <h3 class="text-2xl font-semibold mb-2 text-blue-300">Oracle Certified Professional: Generative AI (2025)</h3>
+                    <p class="text-gray-400 mb-4">Oracle</p>
+                    <a href="https://www.oracle.com/education/certification/generative-ai/" target="_blank" class="text-blue-400 hover:underline">View Certification Path &rarr;</a>
+                </div>
+
+                <!-- Microsoft Certified: Azure AI Fundamentals (AI-900) -->
+                <div class="card p-6 rounded-lg shadow-md">
+                    <h3 class="text-2xl font-semibold mb-2 text-blue-300">Microsoft Certified: Azure AI Fundamentals (AI-900)</h3>
+                    <p class="text-gray-400 mb-4">Microsoft</p>
+                    <a href="https://learn.microsoft.com/en-us/certifications/azure-ai-fundamentals/" target="_blank" class="text-blue-400 hover:underline">View Certification Path &rarr;</a>
+                </div>
+            </div>
+
+            <h2 class="text-4xl font-bold text-center mt-16 mb-12 section-title">Workshops & Specializations</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- AI/ML for Geodata Analysis -->
+                <div class="card p-6 rounded-lg shadow-md">
+                    <h3 class="text-2xl font-semibold mb-2 text-blue-300">AI/ML for Geodata Analysis</h3>
+                    <p class="text-gray-400 mb-4">Indian Institute of Remote Sensing (IIRS)</p>
+                    <p class="text-sm text-gray-500">July 2025, Aug 2024</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-8 text-center">
+        <div class="container">
+            <p>&copy; 2025 BUKKE PREM CHANDHAN KUMAR NAIK. All rights reserved.</p>
+            <div class="flex justify-center space-x-6 mt-4">
+                <a href="https://www.linkedin.com/in/premchandhan/" target="_blank" class="social-icon hover:text-blue-400 transition duration-300">LinkedIn</a>
+                <a href="https://github.com/premchandhan" target="_blank" class="social-icon hover:text-blue-400 transition duration-300">GitHub</a>
+                <a href="https://leetcode.com/premchandhan/" target="_blank" class="social-icon hover:text-blue-400 transition duration-300">LeetCode</a>
+                <a href="mailto:premchandhan@gmail.com" class="social-icon hover:text-blue-400 transition duration-300">Email</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const fadeInSections = document.querySelectorAll('.fade-in-section');
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target); // Stop observing once visible
+                }
+            });
+        }, observerOptions);
+
+        fadeInSections.forEach(section => {
+            observer.observe(section);
+        });
+    </script>
 </body>
 </html>
